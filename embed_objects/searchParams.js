@@ -17,4 +17,9 @@ myURL.searchParams.delete('filter');
 console.log(myURL.searchParams.getAll('filter'));
 console.log('searchParams.toString(): ', myURL.searchParams.toString());
 myURL.search = myURL.searchParams.toString();
+console.log('-------------------------------------');
 
+myURL.searchParams.append('filter', 'es3');
+myURL.searchParams.append('filter', 'es5');
+myURL.search = myURL.searchParams.toString();
+console.log(myURL)
