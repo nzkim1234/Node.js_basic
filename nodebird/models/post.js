@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 module.exports = class Post extends Sequelize.Model{
     static init(sequelize) {
         return super.init({
-            conetent: {
+            content: {
                 type: Sequelize.STRING(140),
                 allowNull: false,
             },
