@@ -1,7 +1,7 @@
 const express = require('express');
-const jwt = requrie('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
-const { veriftyToken } = require('./middlewares');
+const { verifyToken } = require('./middlewares');
 const { Domain, User } = require('../models');
 
 const router = express.Router();
@@ -44,7 +44,7 @@ router.post('/token', async(req, res) => {
     }
 });
 
-router.get('/test', veriftyToken, (req, res) => {
+router.get('/test', verifyToken, (req, res) => {
     res.json(req.decoded);
 });
 
