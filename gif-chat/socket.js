@@ -1,30 +1,22 @@
-const SocketIO = require('socket.io');
+const WebSocket = require('ws');
 
-module.exports = (server, app) => {
-    const io = SocketIO(server, { path: '/socket.io'});
-    app.set('io', io);
-    const rooom = io.of('/room');
-    const chat = io.of('/chat');
+module.exports = (server) => {
+    const wss = new WebSocket.Server({server});
 
-    rooom.on('connection', (socket) => {
-        console.log('room 네임 스페이스 접속');
-        socket.on('disconnect', () => {
-            console.log('room 네임 스페이스 접속 해제');
+    wss.on('connection', (ws ,req) => {
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        console.log('새로운 클라이언트 접속', ip);
+        ws.on('message', (message) => {
+            console.log(message);
         });
-    });
-
-    chat.on('connection', (socket) => {
-        console.log('chat 네임스페이스 접속');
-        const req = socket.request;
-        const { headers: {referer }} = req;
-        const roomId = referer
-            .split('/')[referer.split('/').length - 1]
-            .replace(/\?.+/,'');
-        socket.join(roomId);
-
-        socket.on('disconnect', () => {
-            console.log('chat 네임 스페이스 접속 해제');
-            socket.leave(roomId);
+        ws.on('error', (error) => {
+            console.error(error);
         });
+
+        ws.interval = setInterval(() => {
+            if(ws.readyState === ws.OPEN) {
+                ws.send('서버에서 클라이언트로 메세지를 보냅니다.');
+            }
+        }, 3000);
     });
 };
