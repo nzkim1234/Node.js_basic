@@ -8,17 +8,17 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-    const { email, nick, passport, money} = req.body;
+    const { email, nick, password, money} = req.body;
     try {
         const exUser = await User.findOne({where: {email}});
         if (exUser) {
             return res.redirect('/join?joinError=이미 가입된 이메일입니다.');
         }
-        const hash = await bcrypt.hash(passport, 12);
+        const hash = await bcrypt.hash(password, 12);
         await User.create({
             email,
             nick,
-            passport: hash,
+            password: hash,
             money,
         });
         return res.redirect('/');
@@ -29,7 +29,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
     }
 });
 
-router.post('/lohin', isNotLoggedIn, (req, res, next) => {
+router.post('/login', isNotLoggedIn, (req, res, next) => {
     passport.authenticate('local', (authError, user, info) => {
         if (authError) {
             console.error(authError);
@@ -48,10 +48,12 @@ router.post('/lohin', isNotLoggedIn, (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/logout', isLoggedIn, (req, res) => {
-    req.logout();
-    req.session.destroy();
-    res.redirect('/');
-});
+router.get('/logout', isLoggedIn,(req, res, next) => {
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      req.session.destroy();
+      res.redirect('/');
+    });
+  });
 
 module.exports = router;
