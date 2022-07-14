@@ -7,7 +7,7 @@ module.exports = (server, app) => {
         const req = socket.request;
         const { headers: { referer }} = req;
         const roomId = referer.split('/')[referer.split('/').length - 1];
-        socket.join(roodId);
+        socket.join(roomId);
         socket.on('disconnect', () => {
             socket.leave(roomId);
         });
