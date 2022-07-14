@@ -9,8 +9,6 @@ const connect = () => {
     }
     mongoose.connect(MONGO_URL, {
         dbName: 'gifchat',
-        userNewUrlParser: true,
-        useCreateIndex: true,
     }, (error) => {
         if (error) {
             console.log('몽고디비 연결 에러', error);

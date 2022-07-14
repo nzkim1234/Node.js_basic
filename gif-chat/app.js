@@ -5,13 +5,12 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
-const ColorHash = require('color-hash');
+const ColorHash = require('color-hash').default;
 
 dotenv.config();
 const webSocket = require('./socket');
-const indexRouter = require('./routes');
 const connect = require('./schemas');
-
+const indexRouter = require('./routes');
 const app =express();
 app.set('port', process.env.PORT || 8005);
 app.set('view engine', 'html');
@@ -58,7 +57,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 
-app.use((req, res, next) => {
+app.use((err, req, res, next) => {
     res.locals.message = err.message;
     res.locals.error = process.env.Node_ENV !== 'production' ? err : {};
     res.status(err.status || 500);
