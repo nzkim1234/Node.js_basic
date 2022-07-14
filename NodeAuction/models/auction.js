@@ -24,7 +24,7 @@ module.exports = class Auction extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.Auction.belongsto(db.User);
-        db.Auction.belongsto(db.Good);
+        db.Auction.belongsTo(db.User);
+        db.Auction.belongsTo(db.Good);
     }
 };

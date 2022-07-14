@@ -32,4 +32,4 @@ module.exports = class Good extends Sequelize.Model {
         db.Good.belongsTo(db.User, {as: 'Sold'});
         db.Good.hasMany(db.Auction);
     }
-}
+};
