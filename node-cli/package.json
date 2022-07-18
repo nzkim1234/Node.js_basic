@@ -1,13 +1,11 @@
 {
   "name": "node-cli",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "nodejs cli program",
   "main": "index.js",
-  "scripts": {
-  },
   "author": "",
   "license": "ISC",
   "bin": {
-    "cli": "./template.js"
+    "cli": "./index.js"
   }
 }
