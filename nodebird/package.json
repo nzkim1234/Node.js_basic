@@ -2,9 +2,9 @@
   "name": "nodebird",
   "version": "0.0.1",
   "description": "make nodebird",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production PORT=80 pm2 start server.js -i 0",
+    "start": "NODE_ENV=production PORT=80 pm2 start server.js",
     "dev": "nodemon server",
     "test": "jest",
     "coverage": "jest --coverage"
